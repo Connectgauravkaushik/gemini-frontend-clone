@@ -55,42 +55,10 @@ This will start the app on http://localhost:5173 by default.
 
 
 ### Folder/component structure explanation 
+#### 📸 Preview
+Here's a quick look of project structure :
 
-/
-├── src/
-│   ├── components/                 # Reusable UI and feature-specific components
-│   │   ├── chat-comp/              # Components related to the chat interface
-│   │   │   ├── ChatWindow.jsx          # Main chat window wrapper
-│   │   │   ├── MessageInput.jsx         # Input field for sending messages
-│   │   │   ├── MessageList.jsx          # Renders message feed from localStorage and state
-│   │   │   └── MessageSkeleton.jsx      # Shimmer UI for loading messages
-│   │   ├── dashboard-comp/         # Dashboard layout and user management
-│   │   │   ├── Sidebar.jsx              # Sidebar with navigation
-│   │   │   ├── CreateUserModal.jsx      # Modal to create a new user/chatroom
-│   │   │   └── UserChatWindow.jsx       # Displays list of user chatrooms
-│   │   ├── form-comp/             # Form UIs using React Hook Form + Zod
-│   │   │   └── OTPForm.jsx             # Example: OTP input and validation form
-│   │   ├── landing-page/          # Landing screen components
-│   │   │   └── LandingUI.jsx           # Intro UI for unauthenticated users
-│   │   ├── protectedRoute/        # Simple authentication wrapper
-│   │   │   └── ProtectedRoute.jsx      # Route guard component
-│
-│   ├── utils/
-│   │   ├── appStore.js                # Redux store to manage reducers like userSlice
-│   │   └── userSlice.js              # Redux slice for user state
-│
-│   ├── App.jsx                        # Main app wrapper with router and layout
-│
-├── public/                            # Static public assets
-│   └── favicon.ico
-│
-├── index.html                         # HTML template
-├── tailwind.config.js                 # Tailwind CSS configuration
-├── vite.config.ts                     # Vite build tool configuration
-└── README.md                          # Project documentation (you're here!)
-
-
-
+![Alt Text](./src/images/project%20structure%20image.png)
 
 
 ###  How throttling, pagination, infinite scroll, and form validation are implemented ? 
