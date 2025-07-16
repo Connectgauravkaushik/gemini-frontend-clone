@@ -63,7 +63,7 @@ Here's a quick look of project structure :
 
 ###  How throttling, pagination, infinite scroll, and form validation are implemented ? 
 
-#### How I have implemented formValidation functionality ?
+#### How I have implemented form Validation functionality ?
 Explaination : These are the steps i have used to implement the form validation using react hook form and zod 
  1) The form dynamically switches between phone input and OTP input using the step state.
  2) When the user clicks "Send Code", the form validates against the phoneSchema.
@@ -123,6 +123,22 @@ Explaination :
 
 
 ### screenShots
+Here's a quick look of UI :
+
+#### 📸 landing page Preview
+
+![Alt Text](./src/images/landing-page.png)
+
+
+#### 📸 dashboard preview
+
+![Alt Text](./src/images/dashboard.png)
+
+
+#### 📸 chatI preview
+
+![Alt Text](./src/images/chatUI.png)
+
 
 
 
