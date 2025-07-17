@@ -1,6 +1,9 @@
 
 
-### 📖 Project Overview
+### 📖 Project Overview 
+## 🌐 Live website  
+[🔗 Click to Visit](https://gemini-front-clone.netlify.app/)
+
 The Gemini-style Conversational AI Chat App is a frontend-only web application built with React that mimics the core features of a modern conversational AI platform (like Google Gemini or ChatGPT). The app focuses on delivering a polished user experience with simulated AI interaction, responsive design, and strong UX patterns.
 
 #### Users can:
@@ -14,7 +17,7 @@ The Gemini-style Conversational AI Chat App is a frontend-only web application b
 - Share images directly within chats and use intuitive features like dark mode, loading skeletons, keyboard accessibility, and copy-to-clipboard.
 
 
-#### live link : 
+
 
 ### Setup and Run Instructions
 - Follow the steps below to install dependencies, configure the environment, and start the development server for this React + Vite application.

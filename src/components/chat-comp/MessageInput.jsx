@@ -26,14 +26,13 @@ const MessageInput = ({ onSend, disabled, placeholder }) => {
       toast.success("Image sent!", { autoClose: 1000 });
     };
     reader.readAsDataURL(file);
-
     e.target.value = "";
   };
 
   return (
     <>
       <div
-        className={`p-4 border-t flex space-x-2 items-center transition-colors duration-200 ${
+        className={`p-4 border-t flex flex-wrap gap-2 items-center transition-colors duration-200 ${
           isDark ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-300"
         }`}
       >
@@ -43,7 +42,7 @@ const MessageInput = ({ onSend, disabled, placeholder }) => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           placeholder={placeholder}
-          className={`flex-1 rounded px-3 py-2 focus:outline-none transition-colors duration-200 ${
+          className={`flex-1 min-w-[150px] rounded px-3 py-2 focus:outline-none transition-colors duration-200 ${
             isDark
               ? "bg-gray-700 text-white placeholder-gray-400"
               : "bg-white text-black placeholder-gray-500"
@@ -51,16 +50,30 @@ const MessageInput = ({ onSend, disabled, placeholder }) => {
           disabled={disabled}
         />
 
+        {/* Image Upload Button with Inline SVG */}
         <button
           onClick={() => fileInputRef.current?.click()}
           type="button"
           disabled={disabled}
           title="Upload image"
-          className={`px-3 py-2 rounded transition-colors duration-200 ${
+          className={`p-2 rounded transition-colors duration-200 flex items-center justify-center ${
             disabled ? "opacity-50 cursor-not-allowed" : "hover:brightness-110"
           } ${isDark ? "bg-purple-600 text-white" : "bg-purple-500 text-white"}`}
         >
-          📷
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm16 11l-4-4a1 1 0 00-1.414 0L9 17H5m14-6a2 2 0 11-4 0 2 2 0 014 0z"
+            />
+          </svg>
         </button>
 
         <input
@@ -84,16 +97,9 @@ const MessageInput = ({ onSend, disabled, placeholder }) => {
         </button>
       </div>
 
-
       <ToastContainer
         position="top-right"
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
+        autoClose={3000}
         theme={isDark ? "dark" : "light"}
       />
     </>

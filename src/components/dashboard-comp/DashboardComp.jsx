@@ -18,7 +18,7 @@ const DashBoardComp = () => {
   const [newUserName, setNewUserName] = useState("");
   const [userToDelete, setUserToDelete] = useState(null);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const isCreateModalOpen = useSelector((store) => store.user.showModal);
@@ -26,28 +26,23 @@ const DashBoardComp = () => {
   const userDropdownOpen = useSelector((store) => store.user.userDropdownOpen);
   const activeChatUser = useSelector((store) => store.user.activeChatUser);
   const darkMode = useSelector((store) => store.user.darkMode);
+  const isDark = darkMode === "dark";
 
-  // Search state for debounced search
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
-
-
 
   useEffect(() => {
     setUsers(["Alice", "Bob", "Charlie"]);
   }, []);
 
-  // Debounce the search input
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 500);
-
     return () => clearTimeout(handler);
   }, [searchTerm]);
 
-  // Filter users based on debounced search term
   useEffect(() => {
     if (!debouncedSearchTerm) {
       setFilteredUsers(users);
@@ -94,54 +89,32 @@ const DashBoardComp = () => {
     navigate("/");
   };
 
-  const isDark = darkMode === "dark";
-
   return (
     <div
-      className={`min-h-screen flex transition-colors duration-300 relative  ${
+      className={`min-h-screen flex transition-colors duration-300 relative ${
         isDark ? "bg-gray-950 text-white" : "bg-gray-100 text-gray-900"
       }`}
     >
-      {/* Hamburger button for mobile */}
+      {/* Hamburger for mobile */}
       <button
         onClick={() => dispatch(setShowSidebar(!showSidebar))}
-        className={
-          showSidebar
-            ? "md:hidden absolute top-5 left-48 z-50 p-2 rounded bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-            : "md:hidden absolute top-2 left-4 z-50 p-2 rounded bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-        }
+        className="md:hidden absolute top-2 left-4 z-50 p-2 rounded bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
       >
-        <svg
-          className="h-4 w-4"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
+        <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:relative z-40 top-0 left-0 h-screen w-64 p-6 flex flex-col justify-between transition-transform duration-300 
-        
-          ${
-            showSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-          } ${
-          isDark
-            ? "bg-gray-900 text-white"
-            : "bg-white border-r border-gray-200 text-gray-900"
-        }`}
+        className={`fixed md:relative z-40 top-0 left-0 h-screen w-64 flex flex-col transition-transform duration-300
+          ${showSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+          ${isDark ? "bg-gray-900 text-white" : "bg-white border-r border-gray-200 text-gray-900"}`}
       >
-        <div>
+        {/* Scrollable top content */}
+        <div className="flex-1 overflow-y-auto p-6">
           <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
-          {/* Create User */}
           <button
             onClick={() => dispatch(setCreateModalOpen(true))}
             className="mb-6 w-full bg-blue-600 px-4 py-2 rounded hover:bg-blue-500 text-white"
@@ -149,7 +122,6 @@ const DashBoardComp = () => {
             + Create User
           </button>
 
-          {/* Toggle Users */}
           <button
             onClick={() => dispatch(setUserDropdownOpen(!userDropdownOpen))}
             className={`w-full flex items-center justify-between mb-2 px-4 py-2 rounded transition ${
@@ -161,101 +133,80 @@ const DashBoardComp = () => {
             }`}
           >
             <span>Users</span>
-            {userDropdownOpen ? (
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5 15l7-7 7 7"
-                />
-              </svg>
-            ) : (
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            )}
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d={userDropdownOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}
+              />
+            </svg>
           </button>
 
-          {/* Search Input */}
           {userDropdownOpen && (
-            <input
-              type="text"
-              placeholder="Search users..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className={`w-full mb-3 p-2 rounded border focus:outline-none ${
-                isDark
-                  ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-                  : "bg-gray-100 border-gray-300 text-black placeholder-gray-500"
-              }`}
-            />
-          )}
-
-          {/* User List */}
-          {userDropdownOpen && (
-            <ul className="ml-4 max-h-[calc(100vh-260px)] overflow-y-auto">
-              {filteredUsers.map((user, idx) => (
-                <li
-                  key={idx}
-                  tabIndex={0} // make focusable
-                  role="button" // treat as button for screen readers
-                  onClick={() => {
-                    dispatch(setActiveChatUser(user));
-                    dispatch(setShowSidebar(false));
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
+            <>
+              <input
+                type="text"
+                placeholder="Search users..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className={`w-full mb-3 p-2 rounded border focus:outline-none ${
+                  isDark
+                    ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                    : "bg-gray-100 border-gray-300 text-black placeholder-gray-500"
+                }`}
+              />
+              <ul className="ml-4 space-y-1 max-h-48 overflow-y-auto">
+                {filteredUsers.map((user, idx) => (
+                  <li
+                    key={idx}
+                    tabIndex={0}
+                    role="button"
+                    onClick={() => {
                       dispatch(setActiveChatUser(user));
                       dispatch(setShowSidebar(false));
-                    }
-                  }}
-                  className={`flex justify-between items-center text-sm py-1 rounded px-2 cursor-pointer ${
-                    isDark
-                      ? "text-gray-300 hover:bg-gray-800"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
-                >
-                  <span>{user}</span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setUserToDelete(user);
                     }}
-                    className={`text-xs ${
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        dispatch(setActiveChatUser(user));
+                        dispatch(setShowSidebar(false));
+                      }
+                    }}
+                    className={`flex justify-between items-center text-sm py-1 rounded px-2 cursor-pointer ${
                       isDark
-                        ? "text-red-400 hover:text-red-300"
-                        : "text-red-600 hover:text-red-500"
+                        ? "text-gray-300 hover:bg-gray-800"
+                        : "text-gray-700 hover:bg-gray-100"
                     }`}
-                    title="Delete User"
-                    aria-label={`Delete user ${user}`}
                   >
-                    🗑
-                  </button>
-                </li>
-              ))}
-            </ul>
+                    <span>{user}</span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setUserToDelete(user);
+                      }}
+                      className={`text-xs ${
+                        isDark
+                          ? "text-red-400 hover:text-red-300"
+                          : "text-red-600 hover:text-red-500"
+                      }`}
+                    >
+                      🗑
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
         </div>
 
-        {/* Theme Toggle */}
-        <div className="mt-96 ">
+        {/* Fixed bottom actions */}
+        <div className="p-4 space-y-2 border-t border-gray-700">
           <button
             onClick={() =>
               darkMode === "dark"
@@ -271,10 +222,6 @@ const DashBoardComp = () => {
             <span>{darkMode === "dark" ? "Light Mode" : "Dark Mode"}</span>
             <span className="text-xl">{darkMode === "dark" ? "🌙" : "☀️"}</span>
           </button>
-        </div>
-
-        {/* Logout */}
-        <div className="pt-6">
           <button
             onClick={handleLogout}
             className="w-full bg-red-600 px-4 py-2 rounded hover:bg-red-500 text-white"
@@ -284,7 +231,7 @@ const DashBoardComp = () => {
         </div>
       </aside>
 
-      {/* Overlay for mobile sidebar */}
+      {/* Overlay for mobile */}
       {showSidebar && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
@@ -292,8 +239,8 @@ const DashBoardComp = () => {
         />
       )}
 
-      {/* Main Chat Area */}
-      <main className="flex-1 flex flex-col min-h-screen">
+      {/* Chat area */}
+      <main className="flex-1 flex flex-col min-h-0 overflow-hidden">
         {activeChatUser ? (
           <div className="flex-1 flex flex-col min-h-0">
             <ChatWindow />
@@ -309,11 +256,11 @@ const DashBoardComp = () => {
         )}
       </main>
 
-      {/* Create User Modal */}
+
       {isCreateModalOpen && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center">
           <div
-            className={`p-6 rounded-xl w-full max-w-sm transition-colors duration-300 ${
+            className={`p-6 rounded-xl w-full max-w-sm ${
               isDark ? "bg-gray-900 text-white" : "bg-white text-black"
             }`}
           >
@@ -350,11 +297,10 @@ const DashBoardComp = () => {
         </div>
       )}
 
-      {/* Delete Confirmation Modal */}
       {userToDelete && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center">
           <div
-            className={`p-6 rounded-xl w-full max-w-sm transition-colors duration-300 ${
+            className={`p-6 rounded-xl w-full max-w-sm ${
               isDark ? "bg-gray-900 text-white" : "bg-white text-black"
             }`}
           >
@@ -384,11 +330,7 @@ const DashBoardComp = () => {
         </div>
       )}
 
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        theme={isDark ? "dark" : "light"}
-      />
+      <ToastContainer position="top-right" autoClose={3000} theme={isDark ? "dark" : "light"} />
     </div>
   );
 };
